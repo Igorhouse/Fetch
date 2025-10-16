@@ -36,6 +36,9 @@ final class MIME
 
         foreach (imap_mime_header_decode($text) as $word) {
             $ch = 'default' === $word->charset ? 'ascii' : $word->charset;
+            if (strtolower($ch) === 'ks_c_5601-1987') {
+                $ch = 'EUC-KR';
+            }
             $text = $word->text;
             // Use the possible false return of `mb_encoding_aliases()` to detect whether we can process the encoding
             if (function_exists('mb_convert_encoding') && @mb_encoding_aliases($ch)) {
